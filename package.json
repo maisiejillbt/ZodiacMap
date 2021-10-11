@@ -1,0 +1,27 @@
+{
+  "name": "threeJsStarMap",
+  "version": "1.0.0",
+  "description": "Notes :",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "babel-loader": "^8.2.2",
+    "core-js": "^3.18.1",
+    "css-loader": "^6.3.0",
+    "mini-css-extract-plugin": "^2.3.0",
+    "regenerator-runtime": "^0.13.9",
+    "sass": "^1.42.1",
+    "sass-loader": "^12.1.0",
+    "three": "^0.133.0",
+    "three-geometry-data": "^1.0.1",
+    "webpack": "^5.56.0",
+    "webpack-cli": "^4.8.0"
+  }
+}
