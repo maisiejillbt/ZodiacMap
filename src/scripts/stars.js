@@ -17,6 +17,8 @@ class StarMap {
     this.onWindowResize.bind(this);
     this.animate.bind(this);
     this.render.bind(this);
+    this.addStars.bind(this);
+    this.addEarth.bind(this);
   }
 
   init() {
@@ -44,18 +46,26 @@ class StarMap {
     this.controls.addEventListener( 'change', this.render ); // call this only in static scenes (i.e., if there is no animation loop)
     this.controls.dampingFactor = 0.05;
     this.controls.screenSpacePanning = false;
-    this.controls.minDistance = 10;
+    this.controls.minDistance = 1;
     this.controls.maxDistance = 1000000;
 
-    // adding earth
+    window.addEventListener("resize", this.onWindowResize, false); // adding the event listener to trigger a resize
+    this.addEarth();
+    this.addStars();
+    this.animate(); 
+  }
 
-    const geometry = new THREE.SphereGeometry( 10, 32, 16 );
-    const material = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
+  addEarth() {
+    const geometry = new THREE.SphereGeometry( 10, 32, 16);
+    geometry.thetaStart = 100;
+    const material = new THREE.MeshBasicMaterial();
+    material.map = THREE.ImageUtils.loadTexture('earthMesh.jpeg');
     const sphere = new THREE.Mesh( geometry, material );
     this.scene.add( sphere ); 
+  }
 
+  addStars() {
     // create vertexes for stars to sit
-    
     const vertices = [];
     const XYZ = data.getXYZ();
 
@@ -63,13 +73,6 @@ class StarMap {
       const spreadXYZ = XYZ[i] * 100;
       vertices.push(spreadXYZ);
     }
-
-    // for(let i=0;i<5000;i++){ // adding 5000 random vector points to the this.scene
-    //   const x = Math.random() * 10000;
-    //   const y = Math.random() * 10000;
-    //   const z = Math.random() * 10000;
-    //   vertices.push(x,y,z); // adding the points to the vertices array
-    // }
 
     this.starsGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ));
   
@@ -79,16 +82,11 @@ class StarMap {
       size: 100, 
       transparent: true, 
       map: sprite
-      // color: 0x0000FF
     })
 
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
 
     this.scene.add(stars); // adding those points to the this.scene
-
-    window.addEventListener("resize", this.onWindowResize, false); // adding the event listener to trigger a resize
-
-    this.animate(); 
   }
 
   onWindowResize() {
