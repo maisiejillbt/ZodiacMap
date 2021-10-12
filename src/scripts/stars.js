@@ -19,6 +19,7 @@ class StarMap {
     this.addStars.bind(this);
     this.addEarth.bind(this);
     this.addDragControls.bind(this);
+    this.addConnectorLines.bind(this);
   }
 
   init() {
@@ -43,6 +44,9 @@ class StarMap {
     this.addDragControls();
     this.addEarth();
     this.addStars();
+    this.addConnectorLines(data.psc);
+    this.addConnectorLines(data.ari);
+
     this.animate(); 
   }
 
@@ -79,6 +83,27 @@ class StarMap {
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
 
     this.scene.add(stars); // adding those points to the this.scene
+  }
+
+  addConnectorLines(constellation) {
+    const points = [];
+
+    const pointsArr = data.getLinePoints(constellation);
+
+    for(let i = 0;i<pointsArr.length; i++){
+      const x = pointsArr[i][0];
+      const y = pointsArr[i][1];
+      const z = pointsArr[i][2];
+      points.push( new THREE.Vector3(x,y,z) );
+    }
+
+    const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+    const line = new THREE.Line( geometry, material );
+
+    this.scene.add( line );
   }
 
   addDragControls() {
