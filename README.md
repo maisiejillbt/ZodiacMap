@@ -35,4 +35,3 @@ Constellation Map uses ThreeJs in order to map the stars and make them appear on
 
  - Add lines that connect the constellations  
  - Add "wheel" graphic that spins as different constellations are selected  
-

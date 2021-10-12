@@ -1,7 +1,7 @@
-const StarMap = require("./scripts/stars.js").default;
+const View = require("./scripts/view.js").default;
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const stars = new StarMap();
-  stars.init();
+  const view = new View();
+  view.init();
 })
