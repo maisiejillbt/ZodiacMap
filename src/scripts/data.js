@@ -1,6 +1,6 @@
 const starData = require('../../dist/assets/filteredStars.json');
-const psc = [5742,5586,6193,5742,7097,8198,9487,8833,7884,7007,4906,3786,118268,116771,116771,115830,114971,115738,116928];
-const ari = [13209,9884,8903,8832]
+const posData = require('../../dist/assets/cameraPos.json');
+
 // consider refactoring into one class :/
 function getXYZ() { 
   const xyz = []; 
@@ -29,4 +29,4 @@ function getLinePoints(hipNums) {
   return orderedXYZ;
 }
 
-export {starData, getXYZ, getLinePoints, psc, ari}
+export {starData, getXYZ, getLinePoints, posData}

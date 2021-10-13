@@ -13,17 +13,16 @@ body {
   height: 70vh;
   display: flex;
   justify-content: center;
-}
-
-#wheel {
-  height: 100%;
+  margin-top: 10%;
 }
 
 .controls {
   position: absolute;
-  width: 30vw;
+  width: 40vw;
   height: 100vh;
   margin: 0;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 

@@ -1,4 +1,6 @@
 const data = require("./data.js");
+
+
 const starData = data.starData
 
 import * as THREE from 'three';
@@ -14,16 +16,10 @@ class StarMap {
     this.stars;
     this.controls;
     this.cameraPos;
-    this.cameraRotation;
+    this.cameraRot = [-1.580169334493619, -0.6408270080483579, -1.5864731351196486];
 
-    // this.onWindowResize.bind(this);
-    // this.animate.bind(this);
-    // this.render.bind(this);
-    // this.addStars.bind(this);
-    // this.addEarth.bind(this);
-    // this.addDragControls.bind(this);
-    // this.addConnectorLines.bind(this);
-    // this.onclick.bind(this);
+    this.test1 = [20,25,15];
+    this.test2 = [1,2,3];
   }
 
   init() {
@@ -35,9 +31,7 @@ class StarMap {
       1000000); //setting a this.camera 
 
     this.camera.position.set(-15393.047754227286, 20637.906941436537, -193.4449256040874); // setting cameras z axis position 
-    
     this.cameraPos = new THREE.Vector3(-50,100,20); 
-    
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true // this makes the objects appear smoother
@@ -47,14 +41,15 @@ class StarMap {
     document.body.appendChild(this.renderer.domElement); // creating and appending the render to the dom
 
     window.addEventListener("resize", this.onWindowResize.bind(this), false); // adding the event listener to trigger a resize
+    this.addOnClicks();
     this.addDragControls();
     this.addEarth();
     this.addStars();
-    this.addConnectorLines(data.psc);
-    this.addConnectorLines(data.ari);
-    this.animate(); 
 
-    console.log(this.camera.rotation._x)
+    for(let i=0; i<data.posData.length; i++){
+      this.addConnectorLines(data.posData[i]['stars']);
+    }
+    this.animate(); 
   }
 
   addEarth() {
@@ -78,49 +73,42 @@ class StarMap {
     }
 
     this.starsGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ));
-  
     let sprite = new THREE.TextureLoader().load( 'star.png' );
-
     let starMaterial = new THREE.PointsMaterial({ // creating a material of the texture
       size: 100, 
       transparent: true, 
       map: sprite
     })
-
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
-
     this.scene.add(stars); // adding those points to the this.scene
   }
   
-  onclick(){
-    this.cameraPos = new THREE.Vector3(-0.9833206122014612,-0.17502404380186368, -0.049468754896264726);
-    this.lookAt = new THREE.Vector3(180,95,30);
-    this.camera.lookAt(this.lookAt)
+  onclick(star){
+    let pX = data.posData[star]['pX'];
+    let pY = data.posData[star]['pY'];
+    let pZ = data.posData[star]['pZ'];
+
+    let aX = data.posData[star]['aX'];
+    let aY = data.posData[star]['aY'];
+    let aZ = data.posData[star]['aZ'];
+
+    this.cameraPos = new THREE.Vector3(pX,pY,pZ);
+    this.cameraRot = [aX,aY,aZ];
   }
 
   addConnectorLines(constellation) {
     const points = [];
-
     const pointsArr = data.getLinePoints(constellation);
-
     for(let i = 0;i<pointsArr.length; i++){
       const x = pointsArr[i][0];
       const y = pointsArr[i][1];
       const z = pointsArr[i][2];
       points.push( new THREE.Vector3(x,y,z) );
     }
-    // console.log(pointsArr)
     const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
-
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
-
     const line = new THREE.Line( geometry, material );
-
     this.scene.add( line );
-
-    ////////// REMOVE 
-    let button = document.getElementById('pisces')
-    button.addEventListener("click", this.onclick.bind(this));
   }
 
   addDragControls() {
@@ -130,6 +118,7 @@ class StarMap {
     this.controls.screenSpacePanning = false;
     this.controls.minDistance = 1;
     this.controls.maxDistance = 1000000;
+    console.log(this.controls)
   }
 
   rotateCamera(target, current) {
@@ -138,37 +127,74 @@ class StarMap {
       target[1] !== current[1] ||
       target[2] !== current[2]
     ){
-      for(let i=0;i<2;i++){
+      for(let i=0;i<3;i++){
         let t = target[i];
         let c = current[i];
         let dif = Math.abs(t-c);
 
         if(t < c){
-          if(dif <= 0.05){
-            c = t; 
+          if(dif <= 0.015){
+            current[i] = t; 
           }else{
-            c -= 0.05;
+            current[i] -= 0.015;
           }
         }else if(t > c){
-          if(dif <= 0.05){
-            c = t; 
+          if(dif <= 0.015){
+            current[i] = t; 
           }else{
-            c += 0.05;
+            current[i] += 0.015;
           }
         }
       }
     }
+    this.setCameraRotation(current);
+  }
+
+  setCameraRotation(target) {
+    this.camera.rotation.set(target[0],target[1],target[2]);
   }
 
   currentCameraRotation() {
     const rotation = []; 
-    let x = parseFloat(this.camera.rotation._x.toFixed(2));
-    let y = parseFloat(this.camera.rotation._y.toFixed(2));
-    let z = parseFloat(this.camera.rotation._z.toFixed(2));
+    let x = parseFloat(this.camera.rotation._x.toFixed(3));
+    let y = parseFloat(this.camera.rotation._y.toFixed(3));
+    let z = parseFloat(this.camera.rotation._z.toFixed(3));
     rotation.push(x,y,z);
     return rotation
   }
 
+  addOnClicks() {
+    let pisces = document.getElementById('pisces');
+    let aires = document.getElementById('aires');
+    let gemini = document.getElementById('gemini');
+    let taurus = document.getElementById('taurus');
+    let aquarius = document.getElementById('aquarius');
+    let cap = document.getElementById('cap');
+    let cancer = document.getElementById('cancer');
+    let sag = document.getElementById('sag');
+    let scorpio = document.getElementById('scorpio');
+    let libra = document.getElementById('libra');
+    let leo = document.getElementById('leo');
+    let virgo = document.getElementById('virgo');
+
+
+/// I know I know I know this is bad and needs to be refacotred
+    pisces.addEventListener("click", this.onclick.bind(this,0));
+    aires.addEventListener("click", this.onclick.bind(this,1));
+    gemini.addEventListener("click", this.onclick.bind(this,2));
+    taurus.addEventListener("click", this.onclick.bind(this,3));
+    aquarius.addEventListener("click", this.onclick.bind(this,4));
+    cap.addEventListener("click", this.onclick.bind(this,5));
+    cancer.addEventListener("click", this.onclick.bind(this,6));
+    sag.addEventListener("click", this.onclick.bind(this,7));
+    scorpio.addEventListener("click", this.onclick.bind(this,8));
+    libra.addEventListener("click", this.onclick.bind(this,9));
+    leo.addEventListener("click", this.onclick.bind(this,10));
+    virgo.addEventListener("click", this.onclick.bind(this,1));
+
+
+
+  }
 
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -177,13 +203,14 @@ class StarMap {
   }
 
   animate() {
-    // console.log(this.camera.position);
-    // console.log(this.camera.rotation)
     // console.log(this.currentCameraRotation())
-    this.starsGeo.verticesNeedUpdate = true;
-    this.render();
+   
+    // console.log(this.camera.position)
+    const currentRotation = this.currentCameraRotation();
+    this.rotateCamera(this.cameraRot,currentRotation);
     this.camera.position.lerp(this.cameraPos,0.05);
-    // this.camera.lookAt(this.currentConstellation)
+    this.render();
+
     window.requestAnimationFrame(this.animate.bind(this)) // YOU ALWAYS HAVE TO DO THIS WHEN CALLING REQUEST ANIMATION FRAME IN OOP!!!
   }
 
