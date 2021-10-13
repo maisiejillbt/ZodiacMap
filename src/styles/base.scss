@@ -8,16 +8,20 @@ body {
 }
 
 .wheelContainer {
-  height:100vh;
+  height:70vh;
+  // transform:rotate(100deg);
+  display:flex;
+  justify-content: center;
+
 }
 
 #wheel {
-  height:80%;
+  height:100%;
 }
 
 .controls {
   position: absolute;
-  width: 50vw;
+  width: 30vw;
   height: 100vh;
   margin:0; 
   // background-color: black;

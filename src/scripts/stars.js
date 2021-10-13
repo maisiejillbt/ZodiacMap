@@ -14,15 +14,15 @@ class StarMap {
     this.stars;
     this.controls;
     this.cameraPos;
-    this.lookAt;
+    this.cameraRotation;
 
-    this.onWindowResize.bind(this);
-    this.animate.bind(this);
-    this.render.bind(this);
-    this.addStars.bind(this);
-    this.addEarth.bind(this);
-    this.addDragControls.bind(this);
-    this.addConnectorLines.bind(this);
+    // this.onWindowResize.bind(this);
+    // this.animate.bind(this);
+    // this.render.bind(this);
+    // this.addStars.bind(this);
+    // this.addEarth.bind(this);
+    // this.addDragControls.bind(this);
+    // this.addConnectorLines.bind(this);
     // this.onclick.bind(this);
   }
 
@@ -34,13 +34,9 @@ class StarMap {
       1, 
       1000000); //setting a this.camera 
 
-    this.camera.position.set(-47.935082578202305,52.845854487551854,32.13822592670376); // setting cameras z axis position 
+    this.camera.position.set(-15393.047754227286, 20637.906941436537, -193.4449256040874); // setting cameras z axis position 
     
-    
-    
-    this.cameraPos = new THREE.Vector3(-47.935082578202305,52.845854487551854,32.13822592670376); 
-
-    
+    this.cameraPos = new THREE.Vector3(-50,100,20); 
     
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -57,6 +53,8 @@ class StarMap {
     this.addConnectorLines(data.psc);
     this.addConnectorLines(data.ari);
     this.animate(); 
+
+    console.log(this.camera.rotation._x)
   }
 
   addEarth() {
@@ -111,7 +109,7 @@ class StarMap {
       const z = pointsArr[i][2];
       points.push( new THREE.Vector3(x,y,z) );
     }
-    console.log(pointsArr)
+    // console.log(pointsArr)
     const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
@@ -134,6 +132,44 @@ class StarMap {
     this.controls.maxDistance = 1000000;
   }
 
+  rotateCamera(target, current) {
+    if(
+      target[0] !== current[0] ||
+      target[1] !== current[1] ||
+      target[2] !== current[2]
+    ){
+      for(let i=0;i<2;i++){
+        let t = target[i];
+        let c = current[i];
+        let dif = Math.abs(t-c);
+
+        if(t < c){
+          if(dif <= 0.05){
+            c = t; 
+          }else{
+            c -= 0.05;
+          }
+        }else if(t > c){
+          if(dif <= 0.05){
+            c = t; 
+          }else{
+            c += 0.05;
+          }
+        }
+      }
+    }
+  }
+
+  currentCameraRotation() {
+    const rotation = []; 
+    let x = parseFloat(this.camera.rotation._x.toFixed(2));
+    let y = parseFloat(this.camera.rotation._y.toFixed(2));
+    let z = parseFloat(this.camera.rotation._z.toFixed(2));
+    rotation.push(x,y,z);
+    return rotation
+  }
+
+
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
@@ -143,6 +179,7 @@ class StarMap {
   animate() {
     // console.log(this.camera.position);
     // console.log(this.camera.rotation)
+    // console.log(this.currentCameraRotation())
     this.starsGeo.verticesNeedUpdate = true;
     this.render();
     this.camera.position.lerp(this.cameraPos,0.05);
