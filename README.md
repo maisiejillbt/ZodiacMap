@@ -26,7 +26,13 @@ Constellation Map uses ThreeJs in order to map the stars and make them appear on
 
 - D2 (10/12/2021) Create filtering functions to find correct stars for each constellation and add "constellation" attribute to each. Render only constellation stars 
 
-- D3 (10/13/2021) Edit camera angles to show the correct view of each constellation and add static buttons to navigate to that point in space
+- D3 (10/13/2021) Edit camera angles to show the correct view of each constellation and add static buttons to navigate to that point in space 
+    - firgure out smoothing of camera angle change
+    - create list of points to "look at" 
+    - adjust entry point to be more ~aestetic~
+    - add GH and Li 
+    - make simple intro ?
+    - add a favicon
 
 - D4 (10/14/2021) Wrap up 
 
