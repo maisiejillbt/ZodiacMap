@@ -8,3 +8,24 @@ body {
   background-color: black;
   overflow: hidden;
 }
+
+.wheelContainer {
+  height: 100vh;
+}
+
+#wheel {
+  height: 80%;
+}
+
+.controls {
+  position: absolute;
+  width: 50vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+button {
+  top: 50px;
+  width: 50px;
+}

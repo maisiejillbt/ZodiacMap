@@ -4,6 +4,7 @@ const starData = data.starData
 import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols'
 
+
 class StarMap {
   constructor() {
     this.camera; 
@@ -12,6 +13,8 @@ class StarMap {
     this.starsGeo;
     this.stars;
     this.controls;
+    this.cameraPos;
+    this.lookAt;
 
     this.onWindowResize.bind(this);
     this.animate.bind(this);
@@ -20,6 +23,7 @@ class StarMap {
     this.addEarth.bind(this);
     this.addDragControls.bind(this);
     this.addConnectorLines.bind(this);
+    // this.onclick.bind(this);
   }
 
   init() {
@@ -31,7 +35,13 @@ class StarMap {
       1000000); //setting a this.camera 
 
     this.camera.position.set(-47.935082578202305,52.845854487551854,32.13822592670376); // setting cameras z axis position 
+    
+    
+    
+    this.cameraPos = new THREE.Vector3(-47.935082578202305,52.845854487551854,32.13822592670376); 
 
+    
+    
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true // this makes the objects appear smoother
@@ -46,7 +56,6 @@ class StarMap {
     this.addStars();
     this.addConnectorLines(data.psc);
     this.addConnectorLines(data.ari);
-
     this.animate(); 
   }
 
@@ -84,6 +93,12 @@ class StarMap {
 
     this.scene.add(stars); // adding those points to the this.scene
   }
+  
+  onclick(){
+    this.cameraPos = new THREE.Vector3(-0.9833206122014612,-0.17502404380186368, -0.049468754896264726);
+    this.lookAt = new THREE.Vector3(180,95,30);
+    this.camera.lookAt(this.lookAt)
+  }
 
   addConnectorLines(constellation) {
     const points = [];
@@ -96,7 +111,7 @@ class StarMap {
       const z = pointsArr[i][2];
       points.push( new THREE.Vector3(x,y,z) );
     }
-
+    console.log(pointsArr)
     const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
@@ -104,6 +119,10 @@ class StarMap {
     const line = new THREE.Line( geometry, material );
 
     this.scene.add( line );
+
+    ////////// REMOVE 
+    let button = document.getElementById('pisces')
+    button.addEventListener("click", this.onclick.bind(this));
   }
 
   addDragControls() {
@@ -122,13 +141,16 @@ class StarMap {
   }
 
   animate() {
+    // console.log(this.camera.position);
+    // console.log(this.camera.rotation)
     this.starsGeo.verticesNeedUpdate = true;
     this.render();
+    this.camera.position.lerp(this.cameraPos,0.05);
+    // this.camera.lookAt(this.currentConstellation)
     window.requestAnimationFrame(this.animate.bind(this)) // YOU ALWAYS HAVE TO DO THIS WHEN CALLING REQUEST ANIMATION FRAME IN OOP!!!
   }
 
   render() {
-    // console.log(this.camera.position);
     this.renderer.render( this.scene, this.camera );
   }
 

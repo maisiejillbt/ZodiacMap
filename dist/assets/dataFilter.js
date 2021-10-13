@@ -24,19 +24,20 @@ for(let i=0; i<119618;i++){
   let starHD = parseInt(starData[i]["HD"]);
   let star = starData[i];
 
-  if(starHIP && HIP.includes(starHIP)) {
-    filteredData.push(star);
-  }else if(starHD && HD.includes(starHD)){
-    filteredData.push(star);
+  if(starHIP === 3786) {
+    console.log(star)
   }
+  
 }
 
-const data = JSON.stringify(filteredData);
+
+
+// const data = JSON.stringify(filteredData);
 
 // write JSON string to a file
-fs.writeFile('filteredStars.json', data, (err) => {
-    if (err) {
-        throw err;
-    }
-    console.log("JSON data is saved.");
-});
+// fs.writeFile('filteredStars.json', data, (err) => {
+//     if (err) {
+//         throw err;
+//     }
+//     console.log("JSON data is saved.");
+// });
