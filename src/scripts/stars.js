@@ -110,7 +110,13 @@ class StarMap {
     this.cameraPos = new THREE.Vector3(pX,pY,pZ);
     this.cameraRot = [aX,aY,aZ];
 
-    const welcome = document.getElementById("welcome")
+    //setting up wheel spin 
+    const wheel = document.getElementById("wheelContainer");
+    console.log(wheel)
+    wheel.classList.add("spinwheel");
+    setTimeout(() => wheel.classList.remove("spinwheel") , 2000);
+
+    const welcome = document.getElementById("welcome");
     welcome.style.display = 'none'
   }
 
