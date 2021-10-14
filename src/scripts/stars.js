@@ -96,6 +96,7 @@ class StarMap {
   
   onclick(star){
     this.explore = false; 
+    this.exploreOff();
     let pX = data.posData[star]['pX'];
     let pY = data.posData[star]['pY'];
     let pZ = data.posData[star]['pZ'];
@@ -122,15 +123,27 @@ class StarMap {
   }
 
   exploreOnclick() {
+    // this.cameraPos = new THREE.Vector3(11640.466,-17853.418,6071.615);
+    // this.cameraRot = [1.357,0.44,-1.099];
+    // setTimeout(() => this.explore = true, 4000)
     this.explore = !this.explore;
-    const exploreButton = document.getElementById('explore');
     if(this.explore){
-      exploreButton.classList.add("spinning")
+      this.exploreOn();
     }else{
-      exploreButton.classList.remove("spinning")
+      this.exploreOff();
     }
     const welcome = document.getElementById("welcome")
     welcome.style.display = 'none'
+  }
+
+  exploreOn(){
+    const exploreButton = document.getElementById('explore');
+    exploreButton.classList.add("spinning")
+  }
+
+  exploreOff(){
+    const exploreButton = document.getElementById('explore');
+    exploreButton.classList.remove("spinning");
   }
 
   addConnectorLines(constellation) {
@@ -230,6 +243,7 @@ class StarMap {
     libra.addEventListener("click", this.onclick.bind(this,9));
     leo.addEventListener("click", this.onclick.bind(this,10));
     virgo.addEventListener("click", this.onclick.bind(this,11));
+
     explore.addEventListener("click", this.exploreOnclick.bind(this));
 
   }
@@ -241,12 +255,13 @@ class StarMap {
   }
 
   animate() {
+    // console.log(this.camera.position);
+    // console.log(this.currentCameraRotation());
     if(!this.explore){
       const currentRotation = this.currentCameraRotation();
       this.rotateCamera(this.cameraRot,currentRotation);
       this.camera.position.lerp(this.cameraPos,0.05);
     }
-
     this.render();
     window.requestAnimationFrame(this.animate.bind(this)) // YOU ALWAYS HAVE TO DO THIS WHEN CALLING REQUEST ANIMATION FRAME IN OOP!!!
   }
