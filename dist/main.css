@@ -81,8 +81,144 @@ body {
 .spinwheel {
   animation-name: spinWheel;
   animation-duration: 2000ms;
-  animation-iteration-count: 2;
+  animation-iteration-count: 0.5;
   animation-timing-function: linear;
+}
+
+.rotate {
+  transform: rotate(75deg);
+}
+
+.s0 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.2083;
+  animation-timing-function: linear;
+}
+
+.r0 {
+  transform: rotate(75deg);
+}
+
+.s1 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.2916;
+  animation-timing-function: linear;
+}
+
+.r1 {
+  transform: rotate(105deg);
+}
+
+.s2 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.4583;
+  animation-timing-function: linear;
+}
+
+.r2 {
+  transform: rotate(165deg);
+}
+
+.s3 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.375;
+  animation-timing-function: linear;
+}
+
+.r3 {
+  transform: rotate(135deg);
+}
+
+.s6 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.5416;
+  animation-timing-function: linear;
+}
+
+.r6 {
+  transform: rotate(195deg);
+}
+
+.s10 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.652;
+  animation-timing-function: linear;
+}
+
+.r10 {
+  transform: rotate(225deg);
+}
+
+.s11 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.7083;
+  animation-timing-function: linear;
+}
+
+.r11 {
+  transform: rotate(255deg);
+}
+
+.s9 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.7916;
+  animation-timing-function: linear;
+}
+
+.r9 {
+  transform: rotate(285deg);
+}
+
+.s8 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.875;
+  animation-timing-function: linear;
+}
+
+.r8 {
+  transform: rotate(315deg);
+}
+
+.s7 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.9583;
+  animation-timing-function: linear;
+}
+
+.r7 {
+  transform: rotate(345deg);
+}
+
+.s4 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.125;
+  animation-timing-function: linear;
+}
+
+.r4 {
+  transform: rotate(45deg);
+}
+
+.s5 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.0416;
+  animation-timing-function: linear;
+}
+
+.r5 {
+  transform: rotate(15deg);
 }
 
 @keyframes spin {
@@ -100,8 +236,4 @@ body {
   to {
     transform: rotate(360deg);
   }
-}
-button {
-  top: 50px;
-  width: 50px;
 }

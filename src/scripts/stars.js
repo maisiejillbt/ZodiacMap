@@ -16,36 +16,25 @@ class StarMap {
     this.cameraPos;
     this.cameraRot = [-1.580169334493619, -0.6408270080483579, -1.5864731351196486];
     this.explore = false;
-
-    this.test1 = [20,25,15];
-    this.test2 = [1,2,3];
   }
 
   init() {
     this.scene = new THREE.Scene(); // creating a this.scene
-    this.camera = new THREE.PerspectiveCamera(
-      45, 
-      window.innerWidth / window.innerHeight, 
-      1, 
-      1000000); //setting a this.camera 
-
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000000); //setting a this.camera 
     this.camera.position.set(-15393.047754227286, 20637.906941436537, -193.4449256040874); // setting cameras z axis position 
     this.cameraPos = new THREE.Vector3(-50,100,20); 
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true // this makes the objects appear smoother
     });
-
     this.renderer.setSize(window.innerWidth, window.innerHeight); 
     document.body.appendChild(this.renderer.domElement); // creating and appending the render to the dom
-
     window.addEventListener("resize", this.onWindowResize.bind(this), false); // adding the event listener to trigger a resize
     this.addOnClicks();
     this.addDragControls();
     this.addEarth();
     this.addStars();
-
-    for(let i=0; i<data.posData.length; i++){
+    for(let i=0; i<data.posData.length; i++){ // make this into another function 
       this.addConnectorLines(data.posData[i]['stars']);
     }
     this.animate(); 
@@ -60,31 +49,23 @@ class StarMap {
     this.scene.add( sphere ); 
   }
 
-  addStars() {
+  addStars() { ////// Refactor into generate vertices and build stars
     this.starsGeo = new THREE.BufferGeometry(); // creating an empty geometry object
     // create vertexes for stars to sit
-    const vertices = [];
+    const realStars = [];
     const XYZ = data.getXYZ(data.starData);
     const fillerStars = data.getXYZ(data.fillerStars);
     // console.log(data.fillerStars)
 
     for(let i=0; i < XYZ.length ; i++){
       const spreadXYZ = XYZ[i] * 100;
-      vertices.push(spreadXYZ);
+      realStars.push(spreadXYZ);
     }
-
-    for(let i=0; i < fillerStars.length ; i++){
+    for(let i=0; i < fillerStars.length ; i++){ /// filler accurate stars that are closer to the signs
       const spreadXYZ = fillerStars[i] * 100;
-      vertices.push(spreadXYZ);
+      realStars.push(spreadXYZ);
     }
-
-    for(let i=0; i < 10000 ; i++){
-      const x = Math.random() * 100000 - 30000;
-      const y = Math.random() * 100000 - 30000;
-      const z = Math.random() * 100000 - 30000;
-      vertices.push(x,y,z)
-    }
-
+    const vertices = realStars.concat(this.generateRandomStars());
     this.starsGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ));
     let sprite = new THREE.TextureLoader().load( 'star.png' );
     let starMaterial = new THREE.PointsMaterial({ // creating a material of the texture
@@ -94,8 +75,23 @@ class StarMap {
     })
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
     this.scene.add(stars); // adding those points to the this.scene
+  }
 
-
+  generateRandomStars(){
+    const multipliers = [[2,2,2],[-2,2,2],[-2,-2,2],[-2,-2,-2],[2,-2,-2],[2,2,-2],[2,-2,2],[-2,2,-2]]
+    const vertices = [];
+    for(let i = 0; i<8; i++){
+      const xm = multipliers[i][0];
+      const ym = multipliers[i][1];
+      const zm = multipliers[i][2];
+      for(let j=0; j < 1200 ; j++){ // fake filler stars for around the "galaxy"
+        const x = (Math.random() * 25000) * xm - 1;
+        const y = (Math.random() * 25000) * ym - 1;
+        const z = (Math.random() * 25000) * zm - 1;
+        vertices.push(x,y,z)
+      }
+    }
+    return vertices;
   }
   
   onclick(star){
@@ -110,14 +106,18 @@ class StarMap {
     this.cameraPos = new THREE.Vector3(pX,pY,pZ);
     this.cameraRot = [aX,aY,aZ];
 
-    //setting up wheel spin 
-    const wheel = document.getElementById("wheelContainer");
-    console.log(wheel)
-    wheel.classList.add("spinwheel");
-    setTimeout(() => wheel.classList.remove("spinwheel") , 2000);
+    this.rotateWheel(star)
 
     const welcome = document.getElementById("welcome");
     welcome.style.display = 'none'
+  }
+
+  rotateWheel(star){
+    const wheel = document.getElementById("wheelContainer");
+    wheel.className = "";
+    wheel.classList.add(`s${star}`);
+    setTimeout(() => wheel.classList.remove(`s${star}`) , 2000);
+    wheel.classList.add(`r${star}`);   
   }
 
   exploreOnclick() {
