@@ -1,13 +1,16 @@
 const starData = require('../../dist/assets/filteredStars.json');
 const posData = require('../../dist/assets/cameraPos.json');
+const fillerStars = require('../../dist/assets/fillerStars.json');
 
 // consider refactoring into one class :/
-function getXYZ() { 
+function getXYZ(data) { 
   const xyz = []; 
-  for(let i=0;i<starData.length;i++){
-    xyz.push(starData[i]["X"]);
-    xyz.push(starData[i]["Y"]);
-    xyz.push(starData[i]["Z"]);
+  for(let i=0;i<data.length;i++){
+    if(data[i]["X"]){
+      xyz.push(data[i]["X"]);
+      xyz.push(data[i]["Y"]);
+      xyz.push(data[i]["Z"]);
+    }
   }
   return xyz; 
 }
@@ -29,4 +32,4 @@ function getLinePoints(hipNums) {
   return orderedXYZ;
 }
 
-export {starData, getXYZ, getLinePoints, posData}
+export {starData, getXYZ, getLinePoints, posData, fillerStars}

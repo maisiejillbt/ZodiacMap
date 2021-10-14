@@ -1,6 +1,4 @@
 const data = require("./data.js");
-
-
 const starData = data.starData
 
 import * as THREE from 'three';
@@ -17,6 +15,7 @@ class StarMap {
     this.controls;
     this.cameraPos;
     this.cameraRot = [-1.580169334493619, -0.6408270080483579, -1.5864731351196486];
+    this.explore = false;
 
     this.test1 = [20,25,15];
     this.test2 = [1,2,3];
@@ -65,11 +64,25 @@ class StarMap {
     this.starsGeo = new THREE.BufferGeometry(); // creating an empty geometry object
     // create vertexes for stars to sit
     const vertices = [];
-    const XYZ = data.getXYZ();
+    const XYZ = data.getXYZ(data.starData);
+    const fillerStars = data.getXYZ(data.fillerStars);
+    // console.log(data.fillerStars)
 
     for(let i=0; i < XYZ.length ; i++){
       const spreadXYZ = XYZ[i] * 100;
       vertices.push(spreadXYZ);
+    }
+
+    for(let i=0; i < fillerStars.length ; i++){
+      const spreadXYZ = fillerStars[i] * 100;
+      vertices.push(spreadXYZ);
+    }
+
+    for(let i=0; i < 10000 ; i++){
+      const x = Math.random() * 100000 - 30000;
+      const y = Math.random() * 100000 - 30000;
+      const z = Math.random() * 100000 - 30000;
+      vertices.push(x,y,z)
     }
 
     this.starsGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ));
@@ -81,6 +94,8 @@ class StarMap {
     })
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
     this.scene.add(stars); // adding those points to the this.scene
+
+
   }
   
   onclick(star){
@@ -94,6 +109,21 @@ class StarMap {
 
     this.cameraPos = new THREE.Vector3(pX,pY,pZ);
     this.cameraRot = [aX,aY,aZ];
+
+    const welcome = document.getElementById("welcome")
+    welcome.style.display = 'none'
+  }
+
+  exploreOnclick() {
+    this.explore = !this.explore;
+    const exploreButton = document.getElementById('explore');
+    if(this.explore){
+      exploreButton.classList.add("spinning")
+    }else{
+      exploreButton.classList.remove("spinning")
+    }
+    const welcome = document.getElementById("welcome")
+    welcome.style.display = 'none'
   }
 
   addConnectorLines(constellation) {
@@ -118,7 +148,7 @@ class StarMap {
     this.controls.screenSpacePanning = false;
     this.controls.minDistance = 1;
     this.controls.maxDistance = 1000000;
-    console.log(this.controls)
+
   }
 
   rotateCamera(target, current) {
@@ -177,6 +207,8 @@ class StarMap {
     let leo = document.getElementById('leo');
     let virgo = document.getElementById('virgo');
 
+    let explore = document.getElementById('explore');
+
 
 /// I know I know I know this is bad and needs to be refacotred
     pisces.addEventListener("click", this.onclick.bind(this,0));
@@ -190,9 +222,8 @@ class StarMap {
     scorpio.addEventListener("click", this.onclick.bind(this,8));
     libra.addEventListener("click", this.onclick.bind(this,9));
     leo.addEventListener("click", this.onclick.bind(this,10));
-    virgo.addEventListener("click", this.onclick.bind(this,1));
-
-
+    virgo.addEventListener("click", this.onclick.bind(this,11));
+    explore.addEventListener("click", this.exploreOnclick.bind(this));
 
   }
 
@@ -203,14 +234,13 @@ class StarMap {
   }
 
   animate() {
-    // console.log(this.currentCameraRotation())
-   
-    // console.log(this.camera.position)
-    const currentRotation = this.currentCameraRotation();
-    this.rotateCamera(this.cameraRot,currentRotation);
-    this.camera.position.lerp(this.cameraPos,0.05);
-    this.render();
+    if(!this.explore){
+      const currentRotation = this.currentCameraRotation();
+      this.rotateCamera(this.cameraRot,currentRotation);
+      this.camera.position.lerp(this.cameraPos,0.05);
+    }
 
+    this.render();
     window.requestAnimationFrame(this.animate.bind(this)) // YOU ALWAYS HAVE TO DO THIS WHEN CALLING REQUEST ANIMATION FRAME IN OOP!!!
   }
 
