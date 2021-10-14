@@ -95,6 +95,7 @@ class StarMap {
   }
   
   onclick(star){
+    this.explore = false; 
     let pX = data.posData[star]['pX'];
     let pY = data.posData[star]['pY'];
     let pZ = data.posData[star]['pZ'];
