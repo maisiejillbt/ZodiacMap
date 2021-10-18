@@ -29,45 +29,31 @@ class StarMap {
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight); 
     document.body.appendChild(this.renderer.domElement); // creating and appending the render to the dom
+
     window.addEventListener("resize", this.onWindowResize.bind(this), false); // adding the event listener to trigger a resize
     this.addOnClicks();
     this.addDragControls();
-    this.addEarth();
-    this.addStars();
-    for(let i=0; i<data.posData.length; i++){ // make this into another function 
-      this.addConnectorLines(data.posData[i]['stars']);
-    }
+    this.buildEarth();
+    this.buildStars();
+    this.addConnectorLines();
     this.animate(); 
   }
 
-  addEarth() {
+  buildEarth() {
     const geometry = new THREE.SphereGeometry( 10, 32, 16);
     geometry.thetaStart = 100;
     const material = new THREE.MeshBasicMaterial();
-    material.map = new THREE.TextureLoader().load('earthMesh.jpeg');
+    material.map = new THREE.TextureLoader().load( 'dist/assets/images/earthMesh.jpeg' );
     const sphere = new THREE.Mesh( geometry, material );
     this.scene.add( sphere ); 
   }
 
-  addStars() { ////// Refactor into generate vertices and build stars
+  buildStars() {
     this.starsGeo = new THREE.BufferGeometry(); // creating an empty geometry object
     // create vertexes for stars to sit
-    const realStars = [];
-    const XYZ = data.getXYZ(data.starData);
-    const fillerStars = data.getXYZ(data.fillerStars);
-    // console.log(data.fillerStars)
-
-    for(let i=0; i < XYZ.length ; i++){
-      const spreadXYZ = XYZ[i] * 100;
-      realStars.push(spreadXYZ);
-    }
-    for(let i=0; i < fillerStars.length ; i++){ /// filler accurate stars that are closer to the signs
-      const spreadXYZ = fillerStars[i] * 100;
-      realStars.push(spreadXYZ);
-    }
-    const vertices = realStars.concat(this.generateRandomStars());
+    const vertices = this.generateAllVertices();
     this.starsGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ));
-    let sprite = new THREE.TextureLoader().load( 'star.png' );
+    let sprite = new THREE.TextureLoader().load( '../../dist/assets/images/star.png' );
     let starMaterial = new THREE.PointsMaterial({ // creating a material of the texture
       size: 100, 
       transparent: true, 
@@ -75,6 +61,24 @@ class StarMap {
     })
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
     this.scene.add(stars); // adding those points to the this.scene
+  }
+
+  generateAllVertices() {
+    const realStars = [];
+    const zodiacStars = data.getXYZ(data.starData);
+    const fillerStarsXYZ = data.getXYZ(data.fillerStars);
+
+    for(let i=0; i < zodiacStars.length ; i++){
+      const spreadXYZ = zodiacStars[i] * 100;
+      realStars.push(spreadXYZ);
+    }
+    for(let i=0; i < fillerStarsXYZ.length ; i++){ /// filler accurate stars that are closer to the signs
+      const spreadXYZ = fillerStarsXYZ[i] * 100;
+      realStars.push(spreadXYZ);
+    }
+    const vertices = realStars.concat(this.generateRandomStars());
+
+    return vertices;
   }
 
   generateRandomStars(){
@@ -94,7 +98,7 @@ class StarMap {
     return vertices;
   }
   
-  onclick(star){
+  wheelOnClick(star){
     this.explore = false; 
     this.exploreOff();
     let pX = data.posData[star]['pX'];
@@ -107,9 +111,7 @@ class StarMap {
 
     this.cameraPos = new THREE.Vector3(pX,pY,pZ);
     this.cameraRot = [aX,aY,aZ];
-
     this.rotateWheel(star)
-
     const welcome = document.getElementById("welcome");
     welcome.style.display = 'none'
   }
@@ -123,9 +125,6 @@ class StarMap {
   }
 
   exploreOnclick() {
-    // this.cameraPos = new THREE.Vector3(11640.466,-17853.418,6071.615);
-    // this.cameraRot = [1.357,0.44,-1.099];
-    // setTimeout(() => this.explore = true, 4000)
     this.explore = !this.explore;
     if(this.explore){
       this.exploreOn();
@@ -146,7 +145,13 @@ class StarMap {
     exploreButton.classList.remove("spinning");
   }
 
-  addConnectorLines(constellation) {
+  addConnectorLines() {
+    for(let i=0; i<data.posData.length; i++){ 
+      this.generateConnectorLines(data.posData[i]['stars']);
+    }
+  }
+
+  generateConnectorLines(constellation) {
     const points = [];
     const pointsArr = data.getLinePoints(constellation);
     for(let i = 0;i<pointsArr.length; i++){
@@ -168,7 +173,6 @@ class StarMap {
     this.controls.screenSpacePanning = false;
     this.controls.minDistance = 1;
     this.controls.maxDistance = 1000000;
-
   }
 
   rotateCamera(target, current) {
@@ -214,38 +218,33 @@ class StarMap {
   }
 
   addOnClicks() {
-    let pisces = document.getElementById('pisces');
-    let aires = document.getElementById('aires');
-    let gemini = document.getElementById('gemini');
-    let taurus = document.getElementById('taurus');
-    let aquarius = document.getElementById('aquarius');
-    let cap = document.getElementById('cap');
-    let cancer = document.getElementById('cancer');
-    let sag = document.getElementById('sag');
-    let scorpio = document.getElementById('scorpio');
-    let libra = document.getElementById('libra');
-    let leo = document.getElementById('leo');
-    let virgo = document.getElementById('virgo');
-
-    let explore = document.getElementById('explore');
-
-
+    const pisces = document.getElementById('pisces');
+    const aires = document.getElementById('aires');
+    const gemini = document.getElementById('gemini');
+    const taurus = document.getElementById('taurus');
+    const aquarius = document.getElementById('aquarius');
+    const cap = document.getElementById('cap');
+    const cancer = document.getElementById('cancer');
+    const sag = document.getElementById('sag');
+    const scorpio = document.getElementById('scorpio');
+    const libra = document.getElementById('libra');
+    const leo = document.getElementById('leo');
+    const virgo = document.getElementById('virgo');
+    const explore = document.getElementById('explore');
 /// I know I know I know this is bad and needs to be refacotred
-    pisces.addEventListener("click", this.onclick.bind(this,0));
-    aires.addEventListener("click", this.onclick.bind(this,1));
-    gemini.addEventListener("click", this.onclick.bind(this,2));
-    taurus.addEventListener("click", this.onclick.bind(this,3));
-    aquarius.addEventListener("click", this.onclick.bind(this,4));
-    cap.addEventListener("click", this.onclick.bind(this,5));
-    cancer.addEventListener("click", this.onclick.bind(this,6));
-    sag.addEventListener("click", this.onclick.bind(this,7));
-    scorpio.addEventListener("click", this.onclick.bind(this,8));
-    libra.addEventListener("click", this.onclick.bind(this,9));
-    leo.addEventListener("click", this.onclick.bind(this,10));
-    virgo.addEventListener("click", this.onclick.bind(this,11));
-
+    pisces.addEventListener("click", this.wheelOnClick.bind(this,0));
+    aires.addEventListener("click", this.wheelOnClick.bind(this,1));
+    gemini.addEventListener("click", this.wheelOnClick.bind(this,2));
+    taurus.addEventListener("click", this.wheelOnClick.bind(this,3));
+    aquarius.addEventListener("click", this.wheelOnClick.bind(this,4));
+    cap.addEventListener("click", this.wheelOnClick.bind(this,5));
+    cancer.addEventListener("click", this.wheelOnClick.bind(this,6));
+    sag.addEventListener("click", this.wheelOnClick.bind(this,7));
+    scorpio.addEventListener("click", this.wheelOnClick.bind(this,8));
+    libra.addEventListener("click", this.wheelOnClick.bind(this,9));
+    leo.addEventListener("click", this.wheelOnClick.bind(this,10));
+    virgo.addEventListener("click", this.wheelOnClick.bind(this,11));
     explore.addEventListener("click", this.exploreOnclick.bind(this));
-
   }
 
   onWindowResize() {
@@ -255,8 +254,6 @@ class StarMap {
   }
 
   animate() {
-    // console.log(this.camera.position);
-    // console.log(this.currentCameraRotation());
     if(!this.explore){
       const currentRotation = this.currentCameraRotation();
       this.rotateCamera(this.cameraRot,currentRotation);

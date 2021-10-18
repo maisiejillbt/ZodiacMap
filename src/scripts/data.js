@@ -1,6 +1,6 @@
-const starData = require('../../dist/assets/filteredStars.json');
-const posData = require('../../dist/assets/cameraPos.json');
-const fillerStars = require('../../dist/assets/fillerStars.json');
+const starData = require('../../dist/assets/data/filteredStars.json');
+const posData = require('../../dist/assets/data/cameraPos.json');
+const fillerStars = require('../../dist/assets/data/fillerStars.json');
 
 // consider refactoring into one class :/
 function getXYZ(data) { 
