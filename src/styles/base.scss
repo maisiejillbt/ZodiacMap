@@ -4,6 +4,7 @@ body {
   margin:0; 
   background-color: black;
   overflow: hidden;
+
 }
 
 .controls {
@@ -49,17 +50,19 @@ body {
 }
 
 #li {
+  z-index: 6;
   width: 50px;
   position: absolute;
-  margin-top: 20%;
-  margin-left:7%
+  top: 10%;
+  left:3%
 }
 
 #gh {
+  z-index:6;
   width: 50px;
   position: absolute;
-  margin-left:25%;
-  margin-top: 7%;
+  top: 5%;
+  left:8%;
 }
 
 .glow {
