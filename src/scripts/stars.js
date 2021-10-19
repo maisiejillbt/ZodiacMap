@@ -53,7 +53,7 @@ class StarMap {
     // create vertexes for stars to sit
     const vertices = this.generateAllVertices();
     this.starsGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ));
-    let sprite = new THREE.TextureLoader().load( '/star.png' );
+    let sprite = new THREE.TextureLoader().load( 'dist/assets/images/star.png' );
     let starMaterial = new THREE.PointsMaterial({ // creating a material of the texture
       size: 100, 
       transparent: true, 
