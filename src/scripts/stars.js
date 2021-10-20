@@ -61,6 +61,11 @@ class StarMap {
     })
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
     this.scene.add(stars); // adding those points to the this.scene
+
+    var objBloomWhite = new THREE.Mesh(new THREE.BoxGeometry(5.1, 5.1, 1), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false}));
+    objBloomWhite.position.z = 2.5;
+    objBloomWhite.layers.set(1);
+    scene.add(objBloomWhite);
   }
 
   generateAllVertices() {

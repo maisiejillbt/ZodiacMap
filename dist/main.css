@@ -1,3 +1,288 @@
-body{width:100vw;height:100vh;margin:0;background-color:#000;overflow:hidden}.controls{position:absolute;justify-content:left;width:30vw;height:100vh;margin:0;margin-left:2vw;overflow:hidden;padding-top:7%}.wheelContainer{position:absolute;justify-content:left;width:30vw;margin:0;overflow:hidden;padding-top:7%}.welcome{position:absolute;right:0px;width:70vw;height:100vh;margin:0;overflow:hidden}.link{z-index:5;position:absolute;height:20vh;width:30vw}#explore{width:40%;margin-left:30%;margin-top:7%}#li{z-index:6;width:50px;position:absolute;top:10%;left:3%}#gh{z-index:6;width:50px;position:absolute;top:5%;left:8%}.glow{box-shadow:0 0 6px 3px #fff,0 0 10px 6px #f0f,0 0 14px 9px aqua}.spinning{animation-name:spin;animation-duration:20000ms;animation-iteration-count:infinite;animation-timing-function:linear}.spinwheel{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.5;animation-timing-function:linear}.rotate{transform:rotate(75deg)}.s0{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.2083;animation-timing-function:linear}.r0{transform:rotate(75deg)}.s1{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.2916;animation-timing-function:linear}.r1{transform:rotate(105deg)}.s2{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.4583;animation-timing-function:linear}.r2{transform:rotate(165deg)}.s3{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.375;animation-timing-function:linear}.r3{transform:rotate(135deg)}.s6{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.5416;animation-timing-function:linear}.r6{transform:rotate(195deg)}.s10{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.652;animation-timing-function:linear}.r10{transform:rotate(225deg)}.s11{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.7083;animation-timing-function:linear}.r11{transform:rotate(255deg)}.s9{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.7916;animation-timing-function:linear}.r9{transform:rotate(285deg)}.s8{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.875;animation-timing-function:linear}.r8{transform:rotate(315deg)}.s7{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.9583;animation-timing-function:linear}.r7{transform:rotate(345deg)}.s4{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.125;animation-timing-function:linear}.r4{transform:rotate(45deg)}.s5{animation-name:spinWheel;animation-duration:2000ms;animation-iteration-count:.0416;animation-timing-function:linear}.r5{transform:rotate(15deg)}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes spinWheel{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@media(max-width: 400px){.controls{width:100%;margin-top:100%}.welcome{display:flex;justify-content:center;width:100%;height:50%;margin:0}.links{top:70%}#welcomeText{width:90%}#li{z-index:5;margin:0;width:30px;position:absolute;left:15%;top:75%}#gh{z-index:5;margin:0;width:30px;position:absolute;left:5%;top:80%}#explore{width:18%;position:absolute;top:0px;left:48%}}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: black;
+  overflow: hidden;
+}
 
-/*# sourceMappingURL=main.css.map*/
+.controls {
+  position: absolute;
+  justify-content: left;
+  width: 30vw;
+  height: 100vh;
+  margin: 0;
+  margin-left: 2vw;
+  overflow: hidden;
+  padding-top: 7%;
+}
+
+.wheelContainer {
+  position: absolute;
+  justify-content: left;
+  width: 30vw;
+  margin: 0;
+  overflow: hidden;
+  padding-top: 7%;
+}
+
+.welcome {
+  position: absolute;
+  right: 0px;
+  width: 70vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.link {
+  z-index: 5;
+  position: absolute;
+  height: 20vh;
+  width: 30vw;
+}
+
+#explore {
+  width: 40%;
+  margin-left: 30%;
+  margin-top: 7%;
+}
+
+#li {
+  z-index: 6;
+  width: 50px;
+  position: absolute;
+  top: 10%;
+  left: 3%;
+}
+
+#gh {
+  z-index: 6;
+  width: 50px;
+  position: absolute;
+  top: 5%;
+  left: 8%;
+}
+
+.glow {
+  box-shadow: 0 0 6px 3px #fff, 0 0 10px 6px #f0f, 0 0 14px 9px #0ff;
+  /* outer cyan */
+}
+
+.spinning {
+  animation-name: spin;
+  animation-duration: 20000ms;
+  /* How long lasts 1 turn */
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.spinwheel {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.5;
+  animation-timing-function: linear;
+}
+
+.rotate {
+  transform: rotate(75deg);
+}
+
+.s0 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.2083;
+  animation-timing-function: linear;
+}
+
+.r0 {
+  transform: rotate(75deg);
+}
+
+.s1 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.2916;
+  animation-timing-function: linear;
+}
+
+.r1 {
+  transform: rotate(105deg);
+}
+
+.s2 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.4583;
+  animation-timing-function: linear;
+}
+
+.r2 {
+  transform: rotate(165deg);
+}
+
+.s3 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.375;
+  animation-timing-function: linear;
+}
+
+.r3 {
+  transform: rotate(135deg);
+}
+
+.s6 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.5416;
+  animation-timing-function: linear;
+}
+
+.r6 {
+  transform: rotate(195deg);
+}
+
+.s10 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.652;
+  animation-timing-function: linear;
+}
+
+.r10 {
+  transform: rotate(225deg);
+}
+
+.s11 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.7083;
+  animation-timing-function: linear;
+}
+
+.r11 {
+  transform: rotate(255deg);
+}
+
+.s9 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.7916;
+  animation-timing-function: linear;
+}
+
+.r9 {
+  transform: rotate(285deg);
+}
+
+.s8 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.875;
+  animation-timing-function: linear;
+}
+
+.r8 {
+  transform: rotate(315deg);
+}
+
+.s7 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.9583;
+  animation-timing-function: linear;
+}
+
+.r7 {
+  transform: rotate(345deg);
+}
+
+.s4 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.125;
+  animation-timing-function: linear;
+}
+
+.r4 {
+  transform: rotate(45deg);
+}
+
+.s5 {
+  animation-name: spinWheel;
+  animation-duration: 2000ms;
+  animation-iteration-count: 0.0416;
+  animation-timing-function: linear;
+}
+
+.r5 {
+  transform: rotate(15deg);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinWheel {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 400px) {
+  .controls {
+    width: 100%;
+    margin-top: 100%;
+  }
+
+  .welcome {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    margin: 0;
+  }
+
+  .links {
+    top: 70%;
+  }
+
+  #welcomeText {
+    width: 90%;
+  }
+
+  #li {
+    z-index: 5;
+    margin: 0;
+    width: 30px;
+    position: absolute;
+    left: 15%;
+    top: 75%;
+  }
+
+  #gh {
+    z-index: 5;
+    margin: 0;
+    width: 30px;
+    position: absolute;
+    left: 5%;
+    top: 80%;
+  }
+
+  #explore {
+    width: 18%;
+    position: absolute;
+    top: 0px;
+    left: 48%;
+  }
+}
