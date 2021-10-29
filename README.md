@@ -39,5 +39,6 @@ Constellation Map uses ThreeJs in order to map the stars and make them appear on
 
 ## Post Due-Date 
 
- - Add lines that connect the constellations  
- - Add "wheel" graphic that spins as different constellations are selected  
+- add a modulo like backround to prevent people from trying to move the screen without clicking expolre as well as a pop up 
+- add hover to expore 
+- add pop up fro each sign 
