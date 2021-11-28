@@ -1,6 +1,6 @@
 # Zodiac Map
 
-### https://maisiejillbt.github.io/ConstellationMap/
+### https://maisiejillbt.github.io/ZodiacMap/
 
 ## - Zodiac map is a 3D rendering of the some of the most famous zodiac constellations in our visible universe. 
 
