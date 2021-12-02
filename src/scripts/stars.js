@@ -111,7 +111,16 @@ class StarMap {
 
     this.cameraPos = new THREE.Vector3(pX,pY,pZ);
     this.cameraRot = [aX,aY,aZ];
-    this.rotateWheel(star)
+    this.rotateWheel(star); 
+    
+    const signContainer = document.getElementById("signs");
+    const signs = signContainer.getElementsByClassName("st10")
+    if(signs[0].classList.contains("highlight")){
+      for(let i = 0; i < signs.length; i++){
+        signs[i].classList.remove("highlight");
+      }
+    }
+
     const welcome = document.getElementById("welcome");
     welcome.style.display = 'none'
   }
@@ -131,8 +140,10 @@ class StarMap {
     }else{
       this.exploreOff();
     }
-    const welcome = document.getElementById("welcome")
-    welcome.style.display = 'none'
+    const welcome = document.getElementById("welcome");
+    const explore = document.getElementById("explore");
+    explore.classList.remove("highlight")
+    welcome.style.display = 'none';
   }
 
   exploreOn(){
