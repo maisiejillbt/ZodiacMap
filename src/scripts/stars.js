@@ -1,8 +1,46 @@
 const data = require("./data.js");
 const starData = data.starData
-
 import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols'
+
+// ===== INDEX ======
+
+// ===== Earth ===== LINE 56
+//    - buildEarth()
+
+// ===== Stars ===== LINE 67
+//   - buildStars() 
+//   - generateRandomStars()
+//   - generateAllVertices()
+
+// ===== Connection Lines ===== LINE 122
+//   - addConnectorLines()
+//   - generateConnectorLines(constellation)
+
+// ===== Wheel ===== LINE 150
+//   - wheelOnClick(star)
+//   - rotateWheel(star)
+
+// ===== Explore ===== LINE 190
+//   - exploreOnclick()
+//   - exploreOn() 
+//   - exploreOff() 
+//   - addDragControls() 
+
+// ===== Camera ===== LINE 233
+//   - rotateCamera(target, current)
+//   - setCameraRotation(target)
+//   - currentCameraRotation()
+
+// ===== UI ===== LINE 287
+//   - addOnClicks()
+//   - onWindowResize() 
+//   - cubeVisible()
+//   - directionClickHandler()
+
+// ===== Animation & Rendering ===== LINE 368
+//   - animate()
+//   - render()
 
 class StarMap {
   constructor() {
@@ -39,6 +77,8 @@ class StarMap {
     this.cubeVisible();
   }
 
+  // ====== Earth ======
+
   buildEarth() {
     const geometry = new THREE.SphereGeometry( 10, 32, 16);
     geometry.thetaStart = 100;
@@ -47,6 +87,8 @@ class StarMap {
     const sphere = new THREE.Mesh( geometry, material );
     this.scene.add( sphere ); 
   }
+
+  // ====== Stars ======
 
   buildStars() {
     this.starsGeo = new THREE.BufferGeometry(); // creating an empty geometry object
@@ -61,6 +103,23 @@ class StarMap {
     })
     const stars = new THREE.Points(this.starsGeo, starMaterial); // mapping the points with the material 
     this.scene.add(stars); // adding those points to the this.scene
+  }
+
+  generateRandomStars(){
+    const multipliers = [[2,2,2],[-2,2,2],[-2,-2,2],[-2,-2,-2],[2,-2,-2],[2,2,-2],[2,-2,2],[-2,2,-2]]
+    const vertices = [];
+    for(let i = 0; i<8; i++){
+      const xm = multipliers[i][0];
+      const ym = multipliers[i][1];
+      const zm = multipliers[i][2];
+      for(let j=0; j < 1200 ; j++){ // fake filler stars for around the "galaxy"
+        const x = (Math.random() * 25000) * xm - 1;
+        const y = (Math.random() * 25000) * ym - 1;
+        const z = (Math.random() * 25000) * zm - 1;
+        vertices.push(x,y,z)
+      }
+    }
+    return vertices;
   }
 
   generateAllVertices() {
@@ -81,80 +140,8 @@ class StarMap {
     return vertices;
   }
 
-  generateRandomStars(){
-    const multipliers = [[2,2,2],[-2,2,2],[-2,-2,2],[-2,-2,-2],[2,-2,-2],[2,2,-2],[2,-2,2],[-2,2,-2]]
-    const vertices = [];
-    for(let i = 0; i<8; i++){
-      const xm = multipliers[i][0];
-      const ym = multipliers[i][1];
-      const zm = multipliers[i][2];
-      for(let j=0; j < 1200 ; j++){ // fake filler stars for around the "galaxy"
-        const x = (Math.random() * 25000) * xm - 1;
-        const y = (Math.random() * 25000) * ym - 1;
-        const z = (Math.random() * 25000) * zm - 1;
-        vertices.push(x,y,z)
-      }
-    }
-    return vertices;
-  }
-  
-  wheelOnClick(star){
-    this.explore = false; 
-    this.exploreOff();
-    let pX = data.posData[star]['pX'];
-    let pY = data.posData[star]['pY'];
-    let pZ = data.posData[star]['pZ'];
+  // ====== Connection Lines ======
 
-    let aX = data.posData[star]['aX'];
-    let aY = data.posData[star]['aY'];
-    let aZ = data.posData[star]['aZ'];
-
-    this.cameraPos = new THREE.Vector3(pX,pY,pZ);
-    this.cameraRot = [aX,aY,aZ];
-    this.rotateWheel(star); 
-    
-    const signContainer = document.getElementById("signs");
-    const signs = signContainer.getElementsByClassName("st10")
-    if(signs[0].classList.contains("highlight")){
-      for(let i = 0; i < signs.length; i++){
-        signs[i].classList.remove("highlight");
-      }
-    }
-
-    const welcome = document.getElementById("welcome");
-    welcome.style.display = 'none'
-  }
-
-  rotateWheel(star){
-    const wheel = document.getElementById("wheelContainer");
-    wheel.className = "";
-    wheel.classList.add(`s${star}`);
-    setTimeout(() => wheel.classList.remove(`s${star}`) , 2000);
-    wheel.classList.add(`r${star}`);   
-  }
-
-  exploreOnclick() {
-    this.explore = !this.explore;
-    if(this.explore){
-      this.exploreOn();
-    }else{
-      this.exploreOff();
-    }
-    const welcome = document.getElementById("welcome");
-    const explore = document.getElementById("explore");
-    explore.classList.remove("highlight")
-    welcome.style.display = 'none';
-  }
-
-  exploreOn(){
-    const exploreButton = document.getElementById('explore');
-    exploreButton.classList.add("spinning")
-  }
-
-  exploreOff(){
-    const exploreButton = document.getElementById('explore');
-    exploreButton.classList.remove("spinning");
-  }
 
   addConnectorLines() {
     for(let i=0; i<data.posData.length; i++){ 
@@ -177,6 +164,78 @@ class StarMap {
     this.scene.add( line );
   }
 
+
+  // ====== Wheel ======
+  
+  
+  wheelOnClick(star){
+    this.explore = false; 
+    this.exploreOff();
+    let pX = data.posData[star]['pX'];
+    let pY = data.posData[star]['pY'];
+    let pZ = data.posData[star]['pZ'];
+
+    let aX = data.posData[star]['aX'];
+    let aY = data.posData[star]['aY'];
+    let aZ = data.posData[star]['aZ'];
+
+    this.cameraPos = new THREE.Vector3(pX,pY,pZ);
+    this.cameraRot = [aX,aY,aZ];
+    this.rotateWheel(star); 
+
+    const signContainer = document.getElementById("signs");
+    const signs = signContainer.getElementsByClassName("st10")
+    if(signs[0].classList.contains("highlight")){
+      for(let i = 0; i < signs.length; i++){
+        signs[i].classList.remove("highlight");
+      }
+    }
+
+    const welcome = document.getElementById("welcome");
+    welcome.style.display = 'none'
+  }
+
+  rotateWheel(star){
+    const wheel = document.getElementById("wheelContainer");
+    wheel.className = "";
+    wheel.classList.add(`s${star}`);
+    setTimeout(() => wheel.classList.remove(`s${star}`) , 2000);
+    wheel.classList.add(`r${star}`);   
+  }
+
+
+
+  // ====== Explore ======
+
+
+  exploreOnclick() {
+    this.explore = !this.explore;
+    if(this.explore){
+      this.exploreOn();
+    }else{
+      this.exploreOff();
+    }
+    const welcome = document.getElementById("welcome");
+    const explore = document.getElementById("explore");
+    explore.classList.remove("highlight");
+    welcome.style.display = 'none';
+  }
+
+  exploreOn(){
+    const exploreButton = document.getElementById('explore');
+    exploreButton.classList.add("spinning");
+    const directions = document.getElementById("exploreDirections");
+    directions.classList.remove("hide");
+  }
+
+  exploreOff(){
+    const exploreButton = document.getElementById('explore');
+    exploreButton.classList.remove("spinning");
+    const directions = document.getElementById("exploreDirections");
+    directions.classList.add("hide");
+  }
+
+// - Drag controls for Explore -
   addDragControls() {
     this.controls = new OrbitControls( this.camera, this.renderer.domElement );
     this.controls.addEventListener( 'change', this.render.bind(this) ); // only need this because its a static animation
@@ -185,6 +244,10 @@ class StarMap {
     this.controls.minDistance = 1;
     this.controls.maxDistance = 1000000;
   }
+
+
+// ====== Camera ======
+
 
   rotateCamera(target, current) {
     if(
@@ -228,6 +291,8 @@ class StarMap {
     return rotation
   }
 
+// ====== User Interaction ======
+
   addOnClicks() {
     const pisces = document.getElementById('pisces');
     const aires = document.getElementById('aires');
@@ -242,6 +307,9 @@ class StarMap {
     const leo = document.getElementById('leo');
     const virgo = document.getElementById('virgo');
     const explore = document.getElementById('explore');
+    const directions = document.getElementById('exploreDirections'); 
+    const directionsButton = directions.querySelector('button') 
+
 /// I know I know I know this is bad and needs to be refacotred
     pisces.addEventListener("click", this.wheelOnClick.bind(this,0));
     aires.addEventListener("click", this.wheelOnClick.bind(this,1));
@@ -255,7 +323,9 @@ class StarMap {
     libra.addEventListener("click", this.wheelOnClick.bind(this,9));
     leo.addEventListener("click", this.wheelOnClick.bind(this,10));
     virgo.addEventListener("click", this.wheelOnClick.bind(this,11));
+
     explore.addEventListener("click", this.exploreOnclick.bind(this));
+    directionsButton.addEventListener("click", this.directionClickHandler.bind(this));
   }
 
   onWindowResize() {
@@ -284,7 +354,26 @@ class StarMap {
     }, 3000);
   }
 
-  
+  // - directions on clicks - 
+
+  directionClickHandler(){
+    const directions = document.getElementById('exploreDirections'); 
+    const button = directions.querySelector('button');
+    const text = directions.querySelector('p');
+
+    if(button.innerText === "✚"){
+      button.innerText = "✖";
+      text.style.display = "block";
+    }else{
+      button.innerText = "✚"
+      text.style.display = "none";
+    }
+    
+  }
+
+
+  // ====== Animation & Render Loops ======
+
 
   animate() {
     if(!this.explore){

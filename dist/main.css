@@ -1,7 +1,7 @@
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
-@import url(https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;600&display=swap);
 /*!*****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (1) ***!
   \*****************************************************************************************************************************************/
@@ -33,15 +33,6 @@ body {
   padding-top: 7%;
 }
 
-.welcome {
-  position: absolute;
-  right: 0px;
-  width: 70vw;
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
-}
-
 .link {
   z-index: 5;
   position: absolute;
@@ -69,11 +60,6 @@ body {
   position: absolute;
   top: 5%;
   left: 8%;
-}
-
-.glow {
-  box-shadow: 0 0 6px 3px #fff, 0 0 10px 6px #f0f, 0 0 14px 9px #0ff;
-  /* outer cyan */
 }
 
 .spinning {
@@ -227,37 +213,6 @@ body {
   transform: rotate(15deg);
 }
 
-.highlight {
-  animation: highlight 2s linear 0s infinite;
-  -webkit-animation: highlight 2s linear 0s infinite;
-}
-
-@keyframes highlight {
-  0% {
-    stroke: white;
-    stroke-width: 0px;
-    filter: drop-shadow(0px 0px 0px #fff);
-    -webkit-filter: drop-shadow(0px 0px 0px #fff);
-  }
-  25% {
-    stroke: white;
-    stroke-width: 2.5px;
-    filter: drop-shadow(0px 0px 10px #fff);
-    -webkit-filter: drop-shadow(0px 0px 10px #fff);
-  }
-  50% {
-    stroke: white;
-    stroke-width: 5px;
-    filter: drop-shadow(0px 0px 20px #fff);
-    -webkit-filter: drop-shadow(0px 0px 20px #fff);
-  }
-  100% {
-    stroke: white;
-    stroke-width: 0px;
-    filter: drop-shadow(0px 0px 0px #fff);
-    -webkit-filter: drop-shadow(0px 0px 0px #fff);
-  }
-}
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -321,6 +276,43 @@ body {
     left: 48%;
   }
 }
+.welcome {
+  position: absolute;
+  right: 0px;
+  width: 70vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.explore-directions {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  left: 200px;
+  top: 25px;
+  height: 50px;
+  width: 480px;
+  flex-wrap: wrap;
+  font-family: "Titillium Web", sans-serif;
+  color: white;
+}
+.explore-directions p {
+  width: 430px;
+  margin: 0;
+}
+.explore-directions button {
+  width: 30px;
+  height: 50px;
+  margin-right: 20px;
+  border: none;
+  border-radius: 100%;
+  background-color: transparent;
+  color: white;
+  font-size: 25px;
+  text-indent: -2px;
+}
+
 .far-out {
   display: block;
   position: absolute;
@@ -338,4 +330,36 @@ body {
 
 .hide {
   display: none;
+}
+
+.highlight {
+  animation: highlight 2s linear 0s infinite;
+  -webkit-animation: highlight 2s linear 0s infinite;
+}
+
+@keyframes highlight {
+  0% {
+    stroke: white;
+    stroke-width: 0px;
+    filter: drop-shadow(0px 0px 0px #fff);
+    -webkit-filter: drop-shadow(0px 0px 0px #fff);
+  }
+  25% {
+    stroke: white;
+    stroke-width: 2.5px;
+    filter: drop-shadow(0px 0px 10px #fff);
+    -webkit-filter: drop-shadow(0px 0px 10px #fff);
+  }
+  50% {
+    stroke: white;
+    stroke-width: 5px;
+    filter: drop-shadow(0px 0px 20px #fff);
+    -webkit-filter: drop-shadow(0px 0px 20px #fff);
+  }
+  100% {
+    stroke: white;
+    stroke-width: 0px;
+    filter: drop-shadow(0px 0px 0px #fff);
+    -webkit-filter: drop-shadow(0px 0px 0px #fff);
+  }
 }

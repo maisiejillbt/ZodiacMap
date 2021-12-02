@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;600&display=swap');
 
 body {
   width: 100vw;
@@ -27,15 +27,6 @@ body {
   margin:0;
   overflow: hidden;
   padding-top: 7%;
-}
-
-.welcome {
-  position: absolute;
-  right:0px;
-  width: 70vw;
-  height: 100vh;
-  margin:0; 
-  overflow: hidden; 
 }
 
 .link {
@@ -67,10 +58,6 @@ body {
   left:8%;
 }
 
-.glow {
-  box-shadow: 
-    0 0 6px 3px #fff,  /* inner white */
-    0 0 10px 6px #f0f, /* middle magenta */
-    0 0 14px 9px #0ff; /* outer cyan */
-}
+
+
 
