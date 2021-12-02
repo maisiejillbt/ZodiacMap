@@ -4,7 +4,6 @@ const starData = data.starData
 import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols'
 
-
 class StarMap {
   constructor() {
     this.camera; 
@@ -37,6 +36,7 @@ class StarMap {
     this.buildStars();
     this.addConnectorLines();
     this.animate(); 
+    this.cubeVisible();
   }
 
   buildEarth() {
@@ -252,6 +252,28 @@ class StarMap {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
+
+  cubeVisible(){
+    setInterval(() => {
+      const farOutText = document.querySelector('.far-out'); 
+      if(
+        this.camera.position.x > 100000 ||
+        this.camera.position.y > 100000 ||
+        this.camera.position.z > 100000 ||
+        this.camera.position.x < -100000 ||
+        this.camera.position.y < -100000 ||
+        this.camera.position.z < -100000
+      ){
+        farOutText.classList.remove('hide');
+      }else{
+        if(!farOutText.classList.contains('hide')){
+          farOutText.classList.add('hide');
+        }
+      }
+    }, 3000);
+  }
+
+  
 
   animate() {
     if(!this.explore){

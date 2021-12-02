@@ -44,3 +44,23 @@
   left: 48%;
   }
 }
+
+.far-out{
+  display:block;
+  position: absolute;
+  font-family: 'Titillium Web', sans-serif;
+  color:white;
+  height: 200px;
+  width: 200px;
+  overflow: scroll;
+  bottom: 30px;
+  right: 30px;
+
+  a{
+    color:blue;
+  }
+}
+
+.hide{
+  display:none;
+}
