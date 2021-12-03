@@ -2,9 +2,7 @@
   position: absolute;
   right:0px;
   width: 70vw;
-  height: 100vh;
   margin:0; 
-  overflow: hidden; 
 }
 
 .explore-directions{
@@ -15,13 +13,12 @@
   top: 25px;
   height: 50px;
   width: 480px;
-  flex-wrap:wrap;
   font-family: 'Titillium Web', sans-serif;
   color: white; 
 
   p{
-      width:430px;
-      margin:0;
+    width:430px;
+    margin:0;
   }
 
   button{

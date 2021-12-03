@@ -12,21 +12,14 @@ body {
 .controls {
   position: absolute;
   justify-content:left;
-  width: 30vw;
-  height: 100vh;
   margin:0;
-  margin-left: 2vw; 
-  overflow: hidden;
-  padding-top: 7%;
+  padding-left: 2vw; 
+  padding-top: 7vw;
 }
 
-.wheelContainer {
-  position: absolute;
-  justify-content:left;
+#wheelContainer {
   width: 30vw;
   margin:0;
-  overflow: hidden;
-  padding-top: 7%;
 }
 
 .link {
