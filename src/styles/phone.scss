@@ -3,12 +3,99 @@
     width:100%;
     margin-top: 100%;
   }
-  .welcome {
-    display:flex;
+
+
+  .links{
+    top: 70%;
+  }
+
+  #welcomeText{
+    width: 95vw;
+    height:100%;
+  }
+
+  #welcome{
+    display: flex;
+    align-items: center;
     justify-content: center;
-    width: 100%;
-    height:50%;
-    margin:0; 
+    height: fit-content;
+    position: absolute;
+    width:100vw;
+    top: 150px;
+  }
+
+  #li {
+    z-index:5;
+    margin:0;
+    width: 50px;
+    position: absolute;
+    left: 80px;
+    top:10px;
+  }
+
+  #gh {
+    z-index:5;
+    margin:0;
+    width: 50px;
+    position: absolute;
+    left: 10px;
+    top:80px;
+  }
+
+  #mbt {
+  z-index: 6;
+  width: 80px;
+  position: absolute;
+  top: 10px;
+  left:10px;
+  }
+
+  #explore {
+    width: 18%;
+    position:absolute;
+    top:0px;
+    left: 48%;
+  }
+
+  .explore-directions{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    left: 10px;
+    top: 300px;
+    height: 50px;
+    width: 100vw;
+    flex-wrap:wrap;
+    font-family: 'Titillium Web', sans-serif;
+    color: white; 
+
+    p{
+        width:430px;
+        margin:0;
+    }
+
+    button{
+      width:30px;
+      height:50px;
+      margin-right: 20px; 
+      border:none; 
+      border-radius: 100%;
+      background-color: transparent;
+      color:white;
+      font-size: 25px;
+      text-indent: -2px;
+    }
+  }
+
+  .hide{
+    display:none;
+  }
+}
+
+@media (max-width: 800px) {
+  .controls{
+    width:100%;
+    margin-top: 100%;
   }
 
   .links{
@@ -16,31 +103,98 @@
   }
 
   #welcomeText{
-    width:90%;
+    width: 70vw;
+    height:100%;
+  }
+
+  #welcome{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    height: fit-content;
+    position: absolute;
+    width:100vw;
+    top: 25px;
   }
 
   #li {
     z-index:5;
     margin:0;
-    width: 30px;
+    width: 50px;
     position: absolute;
-    left: 15%;
-    top:75%;
+    left: 80px;
+    top:10px;
   }
 
   #gh {
     z-index:5;
     margin:0;
-    width: 30px;
+    width: 50px;
     position: absolute;
-    left: 5%;
-    top:80%;
+    left: 10px;
+    top:80px;
+  }
+
+  #mbt {
+  z-index: 6;
+  width: 80px;
+  position: absolute;
+  top: 10px;
+  left:10px;
+  }
+
+  .explore-directions{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    left: 10px;
+    top: 200px;
+    height: 50px;
+    width: 100vw;
+    flex-wrap:wrap;
+    font-family: 'Titillium Web', sans-serif;
+    color: white; 
+
+    p{
+        width:430px;
+        margin:0;
+    }
+
+    button{
+      width:30px;
+      height:50px;
+      margin-right: 20px; 
+      border:none; 
+      border-radius: 100%;
+      background-color: transparent;
+      color:white;
+      font-size: 25px;
+      text-indent: -2px;
+    }
+  }
+
+.controls {
+  position: absolute;
+  top:0px;
+  padding:0;
+  margin:0; 
+
+  #wheelContainer {
+    position: absolute;
+    width: 350px;
+    bottom:0;
   }
 
   #explore {
-  width: 18%;
-  position:absolute;
-  top:0px;
-  left: 48%;
+    position: absolute;
+    width: 10%;
+    margin:0;
+    bottom: 25px;
+    left:325px;
+    }
+  } 
+
+  .hide{
+    display:none;
   }
 }

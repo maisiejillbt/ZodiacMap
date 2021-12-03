@@ -42,20 +42,28 @@ body {
   margin-top: 7%;
 }
 
+#mbt {
+  z-index: 6;
+  width: 65px;
+  position: absolute;
+  top: 20px;
+  left:20px;
+}
+
 #li {
   z-index: 6;
-  width: 50px;
+  width: 40px;
   position: absolute;
-  top: 10%;
-  left:3%
+  top: 20px;
+  left:80px;
 }
 
 #gh {
   z-index:6;
-  width: 50px;
+  width: 40px;
   position: absolute;
-  top: 5%;
-  left:8%;
+  top: 80px;
+  left:20px;
 }
 
 
