@@ -83,5 +83,5 @@ Creating the Explore feature was not only a great addition to the UI of the app,
 
 - three.js and Canvas for rendering 3D scene
 - SVG elements for creating Zodiac Wheel and intro elements 
-- SCSS for animation and styling 
+- SCSS for animation and styling.
 
